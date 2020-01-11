@@ -1,13 +1,10 @@
 import * as PIXI from 'pixi.js';
 
-import {keyDown, keyUp, player, gameLoop} from './controller';
+import { keyDown, keyUp, player, gameLoop } from './controller';
+import { mainScreen } from './config';
 
 
-const app = new PIXI.Application({
-  width: 600,
-  height: 400,
-  backgroundColor: 0xAAAAAA
-});
+const app = new PIXI.Application(mainScreen);
 
 document.body.appendChild(app.view);
 
