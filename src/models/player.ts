@@ -2,14 +2,13 @@ import * as PIXI from 'pixi.js';
 import { mainScreen } from '../config';
 
 export class Player extends PIXI.Sprite{
-  // sprite: PIXI.Sprite;
   
   constructor(x: number, y: number, src: string) {
     super(PIXI.Texture.from(src));
-    // this.sprite = PIXI.Sprite.from(src);
     this.anchor.set(0.5);
     this.x = x;
     this.y = y;
+    this.zIndex = 2;
   }
   
   move(x_move: number, y_move: number) {

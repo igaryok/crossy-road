@@ -4,8 +4,9 @@ export class Road extends PIXI.Graphics{
   direction: string;
   canCreateItem: boolean;
   centerRoad: number;
+  type: string;
 
-  constructor(type: string, y: number) {
+  constructor(typeRoad: string, y: number) {
     super();
     const selectColor = (str: string) => {
       switch (str) {
@@ -19,7 +20,7 @@ export class Road extends PIXI.Graphics{
           return 0xAAAAAA;
       }
     }
-    const color = selectColor(type);
+    const color = selectColor(typeRoad);
 
     this.lineStyle(1, 0xFFFFFF, 1);
     this.beginFill(color, 0.25);
@@ -29,10 +30,11 @@ export class Road extends PIXI.Graphics{
     this.direction = Math.random() > 0.5 ? 'left' : 'right';
     this.centerRoad = y + 20;
     this.canCreateItem = true;
+    this.type = typeRoad;
   }
 
   waitingForCreateItem() {
-    const timer = Math.round(Math.random()*3000 + 1000);
+    const timer = Math.round(Math.random()*2000 + 1000);
     setTimeout(() => {
       this.canCreateItem = true;
     }, timer);

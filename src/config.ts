@@ -3,7 +3,7 @@ export const mainScreen = {
   height: 400,
   backgroundColor: 0xAAAAAA
 };
-
+export const life = 3;
 export const roads = [
   {
     type: 'plant',
@@ -38,7 +38,7 @@ export const roads = [
     y: 280
   },
   {
-    type: 'water',
+    type: 'road',
     y: 320
   },
   {

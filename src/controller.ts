@@ -2,20 +2,23 @@ import { Player } from './models/player';
 import { Road } from './models/road';
 import { Tree } from './models/tree';
 import { Car } from './models/car';
+import { Baulk } from './models/baulk';
 
-import { app } from './view';
+import { container, app } from './view';
 
-import { mainScreen, roads  } from './config';
+import { mainScreen, roads, life } from './config';
+
+let countLife: number = life;
 
 const KEYS = [];
 
 export const roadsList = [];
 export const treesList = [];
-export const carsList = [];
+const movingItemsList = [];
 
 const actionRoads = [];
 
-export const player = new Player(mainScreen.width / 2, mainScreen.height - 15, './img/player.png');
+export let player = new Player(mainScreen.width / 2, mainScreen.height - 15, './img/player.png');
 
 export const setupRoads = () => {
   roads.forEach((item, index) => {
@@ -32,20 +35,9 @@ export const setupRoads = () => {
       }
     }
 
-    if(item.type === 'road') {
-
+    if(item.type === 'road' || item.type === 'water') {
       actionRoads.push(road);
     }  
-  });
-
-  actionRoads.forEach(road => {
-    if(road.canCreateItem) {
-      const src = road.direction === 'right' ? './img/truck-right.png' : './img/truck-left.png';
-      const car = new Car(road.centerRoad, src, road.direction);
-      carsList.push(car);
-      road.canCreateItem = false;
-      road.waitingForCreateItem();
-    }
   });
 }
 
@@ -105,29 +97,44 @@ export const gameLoop = () => {
       player.move(movePlayer.x, movePlayer.y);
     }
   }
-  
+
+  movingItemsList.forEach(item => {
+    if(isIntersection(player, item) && item.typeItem === 'car') {
+      container.removeChild(player);
+      countLife --;
+      if(countLife !== 0) {
+        player = new Player(mainScreen.width / 2, mainScreen.height - 15, './img/player.png');
+        container.addChild(player);
+      }
+    }
+  });
+
   actionRoads.forEach(road => {
     if(road.canCreateItem) {
-      const src = road.direction === 'right' ? './img/truck-right.png' : './img/truck-left.png';
-      const car = new Car(road.centerRoad, src, road.direction);
-      app.stage.addChild(car);
-      carsList.push(car);
+      const srcCar = road.direction === 'right' ? './img/truck-right.png' : './img/truck-left.png';
+      const item = road.type === 'road' ? new Car(road.centerRoad, srcCar, road.direction) : new Baulk(road.centerRoad ,road.direction);
+      container.addChild(item);
+      movingItemsList.push(item);
       road.canCreateItem = false;
       road.waitingForCreateItem();
     }
   });
+  
+  container.sortChildren();
 
-  carsList.forEach(car => {
-    car.move()
-    if(car.x > 616 || car.x < -16) {
-      car.dead = true;
+  movingItemsList.forEach(item => {
+    item.move()
+    if(item.x > 630 || item.x < -30) {
+      item.dead = true;
     }
   });
 
-  carsList.forEach((car, index) => {
-    if(car.dead) {
-      app.stage.removeChild(car);
-      carsList.splice(index, 1);
+  movingItemsList.forEach((item, index) => {
+    if(item.dead) {
+      container.removeChild(item);
+      movingItemsList.splice(index, 1);
     }
   });
+
+  if(countLife < 1) app.ticker.stop();
 }

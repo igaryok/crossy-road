@@ -1,16 +1,13 @@
 import * as PIXI from 'pixi.js';
-import { mainScreen } from '../config';
 
-export class Car extends PIXI.Sprite {
+export class Baulk extends PIXI.Sprite {
   direction: string;
-  typeItem: string = 'car';
-  
-  constructor(y: number, src: string, direction: string) {
+  typeItem: string = 'baulk';
 
-    super(PIXI.Texture.from(src))
-    
+  constructor(y: number, direction: string) {
+    super(PIXI.Texture.from('./img/baulk.png'))
     this.anchor.set(0.5);
-    this.x = direction === 'right' ? 16 : 584;
+    this.x = direction === 'right' ? -30 : 630;
     this.y = y;
     this.direction = direction;
     this.zIndex = 1;
@@ -23,4 +20,5 @@ export class Car extends PIXI.Sprite {
       this.x -= 2;
     }
   }
-};
+
+}
