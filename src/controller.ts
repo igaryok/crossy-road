@@ -15,7 +15,7 @@ export const carsList = [];
 
 const actionRoads = [];
 
-export const player = new Player(mainScreen.width / 2, mainScreen.height - 15, './img/player.png').sprite;
+export const player = new Player(mainScreen.width / 2, mainScreen.height - 15, './img/player.png');
 
 export const setupRoads = () => {
   roads.forEach((item, index) => {
@@ -102,7 +102,7 @@ export const gameLoop = () => {
   }
   if(movePlayer.x || movePlayer.y) {
     if(!treesList.some(item => nextIsIntersection(player, movePlayer.x, movePlayer.y, item))) {
-      Player.move(player, movePlayer.x, movePlayer.y);
+      player.move(movePlayer.x, movePlayer.y);
     }
   }
   
