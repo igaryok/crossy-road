@@ -16,29 +16,27 @@ export const keyUp = event => {
 }
 
 export const gameLoop = () => {
+  const movePlayer = {
+    x: 0,
+    y: 0
+  };
+
   if (KEYS['87']) {
-    if (player.y >= 17) {
-      player.y -= 2;
-    }
+    movePlayer.y = -2
   }
 
   if (KEYS['83']) {
-    if (player.y <= mainScreen.height - 17) {
-      player.y += 2;
-    }
-
+    movePlayer.y = 2;
   }
 
   if (KEYS['68']) {
-    if (player.x <= mainScreen.width - 17) {
-      player.x += 2;
-    }
-
+    movePlayer.x = 2;
   }
 
   if (KEYS['65']) {
-    if (player.x >= 17) {
-      player.x -= 2;
-    }
+    movePlayer.x = -2;
+  }
+  if(movePlayer.x || movePlayer.y) {
+    Player.move(player, movePlayer.x, movePlayer.y);
   }
 }
