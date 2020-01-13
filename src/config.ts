@@ -3,7 +3,11 @@ export const mainScreen = {
   height: 400,
   backgroundColor: 0xAAAAAA
 };
+
 export const life = 3;
+
+export const speed = 2;
+
 export const roads = [
   {
     type: 'plant',

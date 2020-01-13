@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import { speed } from '../config';
 
 export class Baulk extends PIXI.Sprite {
   direction: string;
@@ -15,9 +16,9 @@ export class Baulk extends PIXI.Sprite {
   
   move() {
     if (this.direction === 'right') {
-      this.x += 2;
+      this.x += speed;
     } else {
-      this.x -= 2;
+      this.x -= speed;
     }
   }
 

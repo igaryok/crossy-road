@@ -6,7 +6,7 @@ import { Baulk } from './models/baulk';
 
 import { container, app } from './view';
 
-import { mainScreen, roads, life } from './config';
+import { mainScreen, roads, life, speed } from './config';
 
 let countLife: number = life;
 
@@ -51,14 +51,14 @@ const isIntersection = (a, b) => {
         aBox.y < bBox.y + bBox.height;
 }
 
-const nextIsIntersection = (a, x, y,  b) => {
+const nextIsIntersection = (a, aNextX, aNextY,  b) => {
   const aBox = a.getBounds();
   const bBox = b.getBounds();
  
-  return aBox.x+x + aBox.width >= bBox.x &&
-         aBox.x+x <= bBox.x + bBox.width &&
-         aBox.y+y + aBox.height >= bBox.y &&
-         aBox.y+y <= bBox.y + bBox.height;
+  return aBox.x+aNextX + aBox.width >= bBox.x &&
+         aBox.x+aNextX <= bBox.x + bBox.width &&
+         aBox.y+aNextY + aBox.height >= bBox.y &&
+         aBox.y+aNextY <= bBox.y + bBox.height;
  }
 
 export const keyDown = event => {
@@ -78,19 +78,19 @@ export const gameLoop = () => {
   };
 
   if (KEYS['87']) {
-    movePlayer.y = -2
+    movePlayer.y = -speed
   }
 
   if (KEYS['83']) {
-    movePlayer.y = 2;
+    movePlayer.y = speed;
   }
 
   if (KEYS['68']) {
-    movePlayer.x = 2;
+    movePlayer.x = speed;
   }
 
   if (KEYS['65']) {
-    movePlayer.x = -2;
+    movePlayer.x = -speed;
   }
   if(movePlayer.x || movePlayer.y) {
     if(!treesList.some(item => nextIsIntersection(player, movePlayer.x, movePlayer.y, item))) {
