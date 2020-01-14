@@ -1,13 +1,21 @@
 import * as PIXI from 'pixi.js';
 
-import { keyDown, keyUp, player, setupRoads, roadsList, treesList, gameLoop } from './controller';
+import { 
+  keyDown, 
+  keyUp, 
+  player, 
+  setupRoads, 
+  roadsList, 
+  treesList,
+  countLife, 
+  gameLoop } from './controller';
 import { mainScreen } from './config';
-
-// PIXI.settings.SORTABLE_CHILDREN = true;
 
 export const app = new PIXI.Application(mainScreen);
 export const container = new PIXI.Container();
+
 container.sortableChildren = true;
+
 document.body.appendChild(app.view);
 app.stage.addChild(container);
 
